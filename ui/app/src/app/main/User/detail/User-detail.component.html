@@ -1,0 +1,628 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="username" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="User_form_edit" 
+        service="User" 
+        entity="User" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="user_id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #username attr="username" label=" username*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #email attr="email" label="email" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-date-input #joined_date attr="joined_date" type="timestamp" label="joined_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+      
+      <o-integer-input #user_id attr="user_id" label="user_id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="COMMENT-user_id">
+    <div layout-padding>
+      <o-table 
+        attr="CommentTable" 
+        service="Comment" 
+        entity="Comment" 
+        keys="comment_id"
+        parent-keys="user_id:user_id"
+        columns="comment_id;post_id;user_id;content;created_at"  
+        horizontal-scroll="yes"
+        detail-form-route="Comment" 
+        edit-form-route="Comment"
+        visible-columns="comment_id;post_id;user_id;content;created_at"  
+        sort-columns="comment_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #comment_id attr="comment_id" title=" comment_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="post_id" title="post_id">
+    <o-table-cell-renderer-service attr="post_id" 
+        service="Post" entity="PostType" columns="post_id;post_id"
+        parent-keys="user_id:post_id"
+        value-column="post_id" keys="post_id"
+        visible-columns="post_id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #content attr="content" title="content" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-date-input #created_at attr="created_at" type="date" label="created_at" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="EVENTPARTICIPATION-user_id">
+    <div layout-padding>
+      <o-table 
+        attr="EventParticipationTable" 
+        service="EventParticipation" 
+        entity="EventParticipation" 
+        keys="participation_id"
+        parent-keys="user_id:user_id"
+        columns="participation_id;event_id;user_id;registered_at"  
+        horizontal-scroll="yes"
+        detail-form-route="EventParticipation" 
+        edit-form-route="EventParticipation"
+        visible-columns="participation_id;event_id;user_id;registered_at"  
+        sort-columns="participation_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #participation_id attr="participation_id" title=" participation_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="event_id" title="event_id">
+    <o-table-cell-renderer-service attr="event_id" 
+        service="Event" entity="EventType" columns="event_id;description"
+        parent-keys="user_id:event_id"
+        value-column="description" keys="event_id"
+        visible-columns="description" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #registered_at attr="registered_at" type="date" label="registered_at" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="FRIENDSHIP-friend_id">
+    <div layout-padding>
+      <o-table 
+        attr="FriendshipTable" 
+        service="Friendship" 
+        entity="Friendship" 
+        keys="friendship_id"
+        parent-keys="friend_id:user_id"
+        columns="friendship_id;friend_id;user_id;since"  
+        horizontal-scroll="yes"
+        detail-form-route="Friendship" 
+        edit-form-route="Friendship"
+        visible-columns="friendship_id;friend_id;user_id;since"  
+        sort-columns="friendship_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #friendship_id attr="friendship_id" title=" friendship_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="friend_id" title="friend_id">
+    <o-table-cell-renderer-service attr="friend_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:friend_id"
+        value-column="username" keys="friend_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #since attr="since" type="date" label="since" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="FRIENDSHIP-user_id">
+    <div layout-padding>
+      <o-table 
+        attr="FriendshipTable" 
+        service="Friendship" 
+        entity="Friendship" 
+        keys="friendship_id"
+        parent-keys="user_id:user_id"
+        columns="friendship_id;friend_id;user_id;since"  
+        horizontal-scroll="yes"
+        detail-form-route="Friendship" 
+        edit-form-route="Friendship"
+        visible-columns="friendship_id;friend_id;user_id;since"  
+        sort-columns="friendship_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #friendship_id attr="friendship_id" title=" friendship_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="friend_id" title="friend_id">
+    <o-table-cell-renderer-service attr="friend_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:friend_id"
+        value-column="username" keys="friend_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #since attr="since" type="date" label="since" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="GROUPMEMBERSHIP-user_id">
+    <div layout-padding>
+      <o-table 
+        attr="GroupMembershipTable" 
+        service="GroupMembership" 
+        entity="GroupMembership" 
+        keys="membership_id"
+        parent-keys="user_id:user_id"
+        columns="membership_id;group_id;user_id;joined_at"  
+        horizontal-scroll="yes"
+        detail-form-route="GroupMembership" 
+        edit-form-route="GroupMembership"
+        visible-columns="membership_id;group_id;user_id;joined_at"  
+        sort-columns="membership_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #membership_id attr="membership_id" title=" membership_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="group_id" title="group_id">
+    <o-table-cell-renderer-service attr="group_id" 
+        service="Group" entity="GroupType" columns="group_id;name"
+        parent-keys="user_id:group_id"
+        value-column="name" keys="group_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #joined_at attr="joined_at" type="date" label="joined_at" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="MESSAGE-receiver_id">
+    <div layout-padding>
+      <o-table 
+        attr="MessageTable" 
+        service="Message" 
+        entity="Message" 
+        keys="message_id"
+        parent-keys="receiver_id:user_id"
+        columns="message_id;receiver_id;sender_id;content;sent_at"  
+        horizontal-scroll="yes"
+        detail-form-route="Message" 
+        edit-form-route="Message"
+        visible-columns="message_id;receiver_id;sender_id;content;sent_at"  
+        sort-columns="message_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #message_id attr="message_id" title=" message_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="receiver_id" title="receiver_id">
+    <o-table-cell-renderer-service attr="receiver_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:receiver_id"
+        value-column="username" keys="receiver_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="sender_id" title="sender_id">
+    <o-table-cell-renderer-service attr="sender_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:sender_id"
+        value-column="username" keys="sender_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #content attr="content" title="content" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-date-input #sent_at attr="sent_at" type="date" label="sent_at" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="MESSAGE-sender_id">
+    <div layout-padding>
+      <o-table 
+        attr="MessageTable" 
+        service="Message" 
+        entity="Message" 
+        keys="message_id"
+        parent-keys="sender_id:user_id"
+        columns="message_id;receiver_id;sender_id;content;sent_at"  
+        horizontal-scroll="yes"
+        detail-form-route="Message" 
+        edit-form-route="Message"
+        visible-columns="message_id;receiver_id;sender_id;content;sent_at"  
+        sort-columns="message_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #message_id attr="message_id" title=" message_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="receiver_id" title="receiver_id">
+    <o-table-cell-renderer-service attr="receiver_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:receiver_id"
+        value-column="username" keys="receiver_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="sender_id" title="sender_id">
+    <o-table-cell-renderer-service attr="sender_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:sender_id"
+        value-column="username" keys="sender_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #content attr="content" title="content" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-date-input #sent_at attr="sent_at" type="date" label="sent_at" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="NOTIFICATION-user_id">
+    <div layout-padding>
+      <o-table 
+        attr="NotificationTable" 
+        service="Notification" 
+        entity="Notification" 
+        keys="notification_id"
+        parent-keys="user_id:user_id"
+        columns="notification_id;user_id;message;created_at;read"  
+        horizontal-scroll="yes"
+        detail-form-route="Notification" 
+        edit-form-route="Notification"
+        visible-columns="notification_id;user_id;message;created_at;read"  
+        sort-columns="notification_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #notification_id attr="notification_id" title=" notification_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #message attr="message" title="message" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-date-input #created_at attr="created_at" type="date" label="created_at" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-table-column #read attr="read" title="read" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="POST-user_id">
+    <div layout-padding>
+      <o-table 
+        attr="PostTable" 
+        service="Post" 
+        entity="Post" 
+        keys="post_id"
+        parent-keys="user_id:user_id"
+        columns="post_id;user_id;title;content;created_at"  
+        horizontal-scroll="yes"
+        detail-form-route="Post" 
+        edit-form-route="Post"
+        visible-columns="post_id;user_id;title;content;created_at"  
+        sort-columns="post_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #post_id attr="post_id" title=" post_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #title attr="title" title="title" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column #content attr="content" title="content" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-date-input #created_at attr="created_at" type="date" label="created_at" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="PROFILE-user_id">
+    <div layout-padding>
+      <o-table 
+        attr="ProfileTable" 
+        service="Profile" 
+        entity="Profile" 
+        keys="profile_id"
+        parent-keys="user_id:user_id"
+        columns="profile_id;user_id;bio;birthdate"  
+        horizontal-scroll="yes"
+        detail-form-route="Profile" 
+        edit-form-route="Profile"
+        visible-columns="profile_id;user_id;bio;birthdate"  
+        sort-columns="profile_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #profile_id attr="profile_id" title=" profile_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #bio attr="bio" title="bio" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-date-input #birthdate attr="birthdate" type="timestamp" label="birthdate" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="REACTION-user_id">
+    <div layout-padding>
+      <o-table 
+        attr="ReactionTable" 
+        service="Reaction" 
+        entity="Reaction" 
+        keys="reaction_id"
+        parent-keys="user_id:user_id"
+        columns="reaction_id;post_id;user_id;Type"  
+        horizontal-scroll="yes"
+        detail-form-route="Reaction" 
+        edit-form-route="Reaction"
+        visible-columns="reaction_id;post_id;user_id;Type"  
+        sort-columns="reaction_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #reaction_id attr="reaction_id" title=" reaction_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="post_id" title="post_id">
+    <o-table-cell-renderer-service attr="post_id" 
+        service="Post" entity="PostType" columns="post_id;post_id"
+        parent-keys="user_id:post_id"
+        value-column="post_id" keys="post_id"
+        visible-columns="post_id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="user_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #Type attr="Type" title="Type" editable="no" required="yes" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>

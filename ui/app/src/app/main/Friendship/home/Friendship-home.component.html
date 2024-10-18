@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="Friendship" mode="tab" title="FRIENDSHIP">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="FriendshipTable" 
+            service="Friendship" 
+            entity="Friendship" 
+            title="FRIENDSHIP"
+            keys="friendship_id"
+            columns="friendship_id;friend_id;user_id;since" 
+            header-actions="R;D"
+            visible-columns="friendship_id;friend_id;user_id;since"  
+            sort-columns="friendship_id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #friendship_id attr="friendship_id" title=" friendship_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="friend_id" title="friend_id">
+    <o-table-cell-renderer-service attr="friend_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="friendship_id:friend_id"
+        value-column="username" keys="friend_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="friendship_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-date-input #since attr="since" type="date" label="since" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

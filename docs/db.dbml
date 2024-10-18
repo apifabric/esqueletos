@@ -1,0 +1,111 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Comment {
+    comment_id INTEGER [primary key]
+    post_id INTEGER 
+    user_id INTEGER 
+    content TEXT 
+    created_at DATETIME 
+    }
+
+Table Post {
+    post_id INTEGER [primary key]
+    user_id INTEGER 
+    title VARCHAR 
+    content TEXT 
+    created_at DATETIME 
+    }
+
+Table User {
+    user_id INTEGER [primary key]
+    username VARCHAR 
+    email VARCHAR 
+    joined_date DATETIME 
+    }
+
+Table Event {
+    event_id INTEGER [primary key]
+    title VARCHAR 
+    description TEXT 
+    event_date DATETIME 
+    location VARCHAR 
+    created_at DATETIME 
+    }
+
+Table EventParticipation {
+    participation_id INTEGER [primary key]
+    event_id INTEGER 
+    user_id INTEGER 
+    registered_at DATETIME 
+    }
+
+Table Friendship {
+    friendship_id INTEGER [primary key]
+    user_id INTEGER 
+    friend_id INTEGER 
+    since DATETIME 
+    }
+
+Table Group {
+    group_id INTEGER [primary key]
+    name VARCHAR 
+    description TEXT 
+    created_at DATETIME 
+    }
+
+Table GroupMembership {
+    membership_id INTEGER [primary key]
+    group_id INTEGER 
+    user_id INTEGER 
+    joined_at DATETIME 
+    }
+
+Table Message {
+    message_id INTEGER [primary key]
+    sender_id INTEGER 
+    receiver_id INTEGER 
+    content TEXT 
+    sent_at DATETIME 
+    }
+
+Table Notification {
+    notification_id INTEGER [primary key]
+    user_id INTEGER 
+    message VARCHAR 
+    created_at DATETIME 
+    read BOOLEAN 
+    }
+
+Table Profile {
+    profile_id INTEGER [primary key]
+    user_id INTEGER 
+    bio TEXT 
+    birthdate DATETIME 
+    }
+
+Table Reaction {
+    reaction_id INTEGER [primary key]
+    post_id INTEGER 
+    user_id INTEGER 
+    Type VARCHAR 
+    }
+
+
+
+// Relationships
+    Ref: Comment.(post_id) < Post.(post_id)
+    Ref: Comment.(user_id) < User.(user_id)
+    Ref: Post.(user_id) < User.(user_id)
+    Ref: EventParticipation.(event_id) < Event.(event_id)
+    Ref: EventParticipation.(user_id) < User.(user_id)
+    Ref: Friendship.(friend_id) < User.(user_id)
+    Ref: Friendship.(user_id) < User.(user_id)
+    Ref: GroupMembership.(group_id) < Group.(group_id)
+    Ref: GroupMembership.(user_id) < User.(user_id)
+    Ref: Message.(receiver_id) < User.(user_id)
+    Ref: Message.(sender_id) < User.(user_id)
+    Ref: Notification.(user_id) < User.(user_id)
+    Ref: Profile.(user_id) < User.(user_id)
+    Ref: Reaction.(post_id) < Post.(post_id)
+    Ref: Reaction.(user_id) < User.(user_id)

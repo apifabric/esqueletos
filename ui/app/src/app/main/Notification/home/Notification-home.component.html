@@ -1,0 +1,46 @@
+<o-form-layout-manager attr="Notification" mode="tab" title="NOTIFICATION">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="NotificationTable" 
+            service="Notification" 
+            entity="Notification" 
+            title="NOTIFICATION"
+            keys="notification_id"
+            columns="notification_id;user_id;message;created_at;read" 
+            header-actions="R;D"
+            visible-columns="notification_id;user_id;message;created_at;read"  
+            sort-columns="notification_id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #notification_id attr="notification_id" title=" notification_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="notification_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #message attr="message" title="message" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-date-input #created_at attr="created_at" type="date" label="created_at" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-column #read attr="read" title="read" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

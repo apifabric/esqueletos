@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="Reaction" mode="tab" title="REACTION">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ReactionTable" 
+            service="Reaction" 
+            entity="Reaction" 
+            title="REACTION"
+            keys="reaction_id"
+            columns="reaction_id;post_id;user_id;Type" 
+            header-actions="R;D"
+            visible-columns="reaction_id;post_id;user_id;Type"  
+            sort-columns="reaction_id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #reaction_id attr="reaction_id" title=" reaction_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="post_id" title="post_id">
+    <o-table-cell-renderer-service attr="post_id" 
+        service="Post" entity="PostType" columns="post_id;post_id"
+        parent-keys="reaction_id:post_id"
+        value-column="post_id" keys="post_id"
+        visible-columns="post_id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="reaction_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #Type attr="Type" title="Type" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

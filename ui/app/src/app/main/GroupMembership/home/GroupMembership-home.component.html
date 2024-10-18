@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="GroupMembership" mode="tab" title="GROUPMEMBERSHIP">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="GroupMembershipTable" 
+            service="GroupMembership" 
+            entity="GroupMembership" 
+            title="GROUPMEMBERSHIP"
+            keys="membership_id"
+            columns="membership_id;group_id;user_id;joined_at" 
+            header-actions="R;D"
+            visible-columns="membership_id;group_id;user_id;joined_at"  
+            sort-columns="membership_id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #membership_id attr="membership_id" title=" membership_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="group_id" title="group_id">
+    <o-table-cell-renderer-service attr="group_id" 
+        service="Group" entity="GroupType" columns="group_id;name"
+        parent-keys="membership_id:group_id"
+        value-column="name" keys="group_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="membership_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-date-input #joined_at attr="joined_at" type="date" label="joined_at" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

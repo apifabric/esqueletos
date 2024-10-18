@@ -1,0 +1,391 @@
+about:
+  date: October 18, 2024 22:05:32
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 15
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Comment:
+    attributes:
+    - label: ' comment_id*'
+      name: comment_id
+      search: true
+      sort: true
+    - name: post_id
+      required: true
+    - name: user_id
+      required: true
+    - name: content
+      required: true
+    - name: created_at
+    description: Table to store comments on posts.
+    info_list: Table to store comments on posts.
+    tab_groups:
+    - direction: toone
+      fks:
+      - post_id
+      name: post
+      resource: Post
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Comment
+    user_key: comment_id
+  Event:
+    attributes:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+    - name: title
+      required: true
+    - name: event_date
+      required: true
+    - name: location
+    - name: created_at
+    - name: event_id
+    description: Table to store event information.
+    info_list: Table to store event information.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - event_id
+      name: EventParticipationList
+      resource: EventParticipation
+    type: Event
+    user_key: description
+  EventParticipation:
+    attributes:
+    - label: ' participation_id*'
+      name: participation_id
+      search: true
+      sort: true
+    - name: event_id
+      required: true
+    - name: user_id
+      required: true
+    - name: registered_at
+    description: Table to store participation relations for events.
+    info_list: Table to store participation relations for events.
+    tab_groups:
+    - direction: toone
+      fks:
+      - event_id
+      name: event
+      resource: Event
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: EventParticipation
+    user_key: participation_id
+  Friendship:
+    attributes:
+    - label: ' friendship_id*'
+      name: friendship_id
+      search: true
+      sort: true
+    - name: friend_id
+      required: true
+    - name: user_id
+      required: true
+    - name: since
+    description: Table to store friendship relations between users.
+    info_list: Table to store friendship relations between users.
+    tab_groups:
+    - direction: toone
+      fks:
+      - friend_id
+      name: friend
+      resource: User
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Friendship
+    user_key: friendship_id
+  Group:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: description
+    - name: created_at
+    - name: group_id
+    description: Table to store group information.
+    info_list: Table to store group information.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - group_id
+      name: GroupMembershipList
+      resource: GroupMembership
+    type: Group
+    user_key: name
+  GroupMembership:
+    attributes:
+    - label: ' membership_id*'
+      name: membership_id
+      search: true
+      sort: true
+    - name: group_id
+      required: true
+    - name: user_id
+      required: true
+    - name: joined_at
+    description: Table to store membership relations between users and groups.
+    info_list: Table to store membership relations between users and groups.
+    tab_groups:
+    - direction: toone
+      fks:
+      - group_id
+      name: group
+      resource: Group
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: GroupMembership
+    user_key: membership_id
+  Message:
+    attributes:
+    - label: ' message_id*'
+      name: message_id
+      search: true
+      sort: true
+    - name: receiver_id
+      required: true
+    - name: sender_id
+      required: true
+    - name: content
+      required: true
+    - name: sent_at
+    description: Table to store messages exchanged between users.
+    info_list: Table to store messages exchanged between users.
+    tab_groups:
+    - direction: toone
+      fks:
+      - receiver_id
+      name: receiver
+      resource: User
+    - direction: toone
+      fks:
+      - sender_id
+      name: sender
+      resource: User
+    type: Message
+    user_key: message_id
+  Notification:
+    attributes:
+    - label: ' notification_id*'
+      name: notification_id
+      search: true
+      sort: true
+    - name: user_id
+      required: true
+    - name: message
+      required: true
+    - name: created_at
+    - name: read
+    description: Table to store notifications for user activities.
+    info_list: Table to store notifications for user activities.
+    tab_groups:
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Notification
+    user_key: notification_id
+  Post:
+    attributes:
+    - label: ' post_id*'
+      name: post_id
+      search: true
+      sort: true
+    - name: user_id
+      required: true
+    - name: title
+      required: true
+    - name: content
+      required: true
+    - name: created_at
+    description: Table to store user posts.
+    info_list: Table to store user posts.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - post_id
+      name: CommentList
+      resource: Comment
+    - direction: tomany
+      fks:
+      - post_id
+      name: ReactionList
+      resource: Reaction
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Post
+    user_key: post_id
+  Profile:
+    attributes:
+    - label: ' profile_id*'
+      name: profile_id
+      search: true
+      sort: true
+    - name: user_id
+      required: true
+    - name: bio
+    - name: birthdate
+    description: Table to store user profile details.
+    info_list: Table to store user profile details.
+    tab_groups:
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Profile
+    user_key: profile_id
+  Reaction:
+    attributes:
+    - label: ' reaction_id*'
+      name: reaction_id
+      search: true
+      sort: true
+    - name: post_id
+      required: true
+    - name: user_id
+      required: true
+    - name: Type
+      required: true
+    description: Table to store reactions to posts.
+    info_list: Table to store reactions to posts.
+    tab_groups:
+    - direction: toone
+      fks:
+      - post_id
+      name: post
+      resource: Post
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Reaction
+    user_key: reaction_id
+  User:
+    attributes:
+    - label: ' username*'
+      name: username
+      required: true
+      search: true
+      sort: true
+    - name: email
+      required: true
+    - name: joined_date
+    - name: user_id
+    description: Table to store user-related information.
+    info_list: Table to store user-related information.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - user_id
+      name: CommentList
+      resource: Comment
+    - direction: tomany
+      fks:
+      - user_id
+      name: EventParticipationList
+      resource: EventParticipation
+    - direction: tomany
+      fks:
+      - friend_id
+      name: FriendshipList
+      resource: Friendship
+    - direction: tomany
+      fks:
+      - user_id
+      name: FriendshipList
+      resource: Friendship
+    - direction: tomany
+      fks:
+      - user_id
+      name: GroupMembershipList
+      resource: GroupMembership
+    - direction: tomany
+      fks:
+      - receiver_id
+      name: MessageList
+      resource: Message
+    - direction: tomany
+      fks:
+      - sender_id
+      name: senderMessageList
+      resource: Message
+    - direction: tomany
+      fks:
+      - user_id
+      name: NotificationList
+      resource: Notification
+    - direction: tomany
+      fks:
+      - user_id
+      name: PostList
+      resource: Post
+    - direction: tomany
+      fks:
+      - user_id
+      name: ProfileList
+      resource: Profile
+    - direction: tomany
+      fks:
+      - user_id
+      name: ReactionList
+      resource: Reaction
+    type: User
+    user_key: username
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

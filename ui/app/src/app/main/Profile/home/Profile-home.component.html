@@ -1,0 +1,44 @@
+<o-form-layout-manager attr="Profile" mode="tab" title="PROFILE">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ProfileTable" 
+            service="Profile" 
+            entity="Profile" 
+            title="PROFILE"
+            keys="profile_id"
+            columns="profile_id;user_id;bio;birthdate" 
+            header-actions="R;D"
+            visible-columns="profile_id;user_id;bio;birthdate"  
+            sort-columns="profile_id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #profile_id attr="profile_id" title=" profile_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="user_id;username"
+        parent-keys="profile_id:user_id"
+        value-column="username" keys="user_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #bio attr="bio" title="bio" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-date-input #birthdate attr="birthdate" type="timestamp" label="birthdate" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

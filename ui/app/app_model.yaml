@@ -1,0 +1,577 @@
+about:
+  date: October 18, 2024 22:05:32
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Comment:
+    columns:
+    - label: ' comment_id*'
+      name: comment_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: post_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: content
+      required: true
+      template: text
+      type: TEXT
+    - name: created_at
+      template: date
+      type: DATETIME
+    description: Table to store comments on posts.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: comment_id
+    home_template: home_template.html
+    info_list: Table to store comments on posts.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - comment_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - post_id
+      name: post
+      resource: Post
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Comment
+  Event:
+    columns:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+      template: text
+      type: TEXT
+    - name: title
+      required: true
+      template: text
+      type: VARCHAR
+    - name: event_date
+      required: true
+      template: date
+      type: DATETIME
+    - name: location
+      template: text
+      type: VARCHAR
+    - name: created_at
+      template: date
+      type: DATETIME
+    - name: event_id
+      template: integer
+      type: INTEGER
+    description: Table to store event information.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: description
+    home_template: home_template.html
+    info_list: Table to store event information.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - event_id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - event_id
+      name: EventParticipationList
+      resource: EventParticipation
+    type: Event
+  EventParticipation:
+    columns:
+    - label: ' participation_id*'
+      name: participation_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: event_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: registered_at
+      template: date
+      type: DATETIME
+    description: Table to store participation relations for events.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: participation_id
+    home_template: home_template.html
+    info_list: Table to store participation relations for events.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - participation_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - event_id
+      name: event
+      resource: Event
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: EventParticipation
+  Friendship:
+    columns:
+    - label: ' friendship_id*'
+      name: friendship_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: friend_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: since
+      template: date
+      type: DATETIME
+    description: Table to store friendship relations between users.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: friendship_id
+    home_template: home_template.html
+    info_list: Table to store friendship relations between users.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - friendship_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - friend_id
+      name: friend
+      resource: User
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Friendship
+  Group:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: description
+      template: text
+      type: TEXT
+    - name: created_at
+      template: date
+      type: DATETIME
+    - name: group_id
+      template: integer
+      type: INTEGER
+    description: Table to store group information.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Table to store group information.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - group_id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - group_id
+      name: GroupMembershipList
+      resource: GroupMembership
+    type: Group
+  GroupMembership:
+    columns:
+    - label: ' membership_id*'
+      name: membership_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: group_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: joined_at
+      template: date
+      type: DATETIME
+    description: Table to store membership relations between users and groups.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: membership_id
+    home_template: home_template.html
+    info_list: Table to store membership relations between users and groups.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - membership_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - group_id
+      name: group
+      resource: Group
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: GroupMembership
+  Message:
+    columns:
+    - label: ' message_id*'
+      name: message_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: receiver_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: sender_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: content
+      required: true
+      template: text
+      type: TEXT
+    - name: sent_at
+      template: date
+      type: DATETIME
+    description: Table to store messages exchanged between users.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: message_id
+    home_template: home_template.html
+    info_list: Table to store messages exchanged between users.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - message_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - receiver_id
+      name: receiver
+      resource: User
+    - direction: toone
+      fks:
+      - sender_id
+      name: sender
+      resource: User
+    type: Message
+  Notification:
+    columns:
+    - label: ' notification_id*'
+      name: notification_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: message
+      required: true
+      template: text
+      type: VARCHAR
+    - name: created_at
+      template: date
+      type: DATETIME
+    - name: read
+      template: text
+      type: BOOLEAN
+    description: Table to store notifications for user activities.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: notification_id
+    home_template: home_template.html
+    info_list: Table to store notifications for user activities.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - notification_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Notification
+  Post:
+    columns:
+    - label: ' post_id*'
+      name: post_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: title
+      required: true
+      template: text
+      type: VARCHAR
+    - name: content
+      required: true
+      template: text
+      type: TEXT
+    - name: created_at
+      template: date
+      type: DATETIME
+    description: Table to store user posts.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: post_id
+    home_template: home_template.html
+    info_list: Table to store user posts.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - post_id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - post_id
+      name: CommentList
+      resource: Comment
+    - direction: tomany
+      fks:
+      - post_id
+      name: ReactionList
+      resource: Reaction
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Post
+  Profile:
+    columns:
+    - label: ' profile_id*'
+      name: profile_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: bio
+      template: text
+      type: TEXT
+    - name: birthdate
+      template: date
+      type: DATETIME
+    description: Table to store user profile details.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: profile_id
+    home_template: home_template.html
+    info_list: Table to store user profile details.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - profile_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Profile
+  Reaction:
+    columns:
+    - label: ' reaction_id*'
+      name: reaction_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: post_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: Type
+      required: true
+      template: text
+      type: VARCHAR
+    description: Table to store reactions to posts.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: reaction_id
+    home_template: home_template.html
+    info_list: Table to store reactions to posts.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - reaction_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - post_id
+      name: post
+      resource: Post
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Reaction
+  User:
+    columns:
+    - label: ' username*'
+      name: username
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: email
+      required: true
+      template: text
+      type: VARCHAR
+    - name: joined_date
+      template: date
+      type: DATETIME
+    - name: user_id
+      template: integer
+      type: INTEGER
+    description: Table to store user-related information.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: username
+    home_template: home_template.html
+    info_list: Table to store user-related information.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - user_id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - user_id
+      name: CommentList
+      resource: Comment
+    - direction: tomany
+      fks:
+      - user_id
+      name: EventParticipationList
+      resource: EventParticipation
+    - direction: tomany
+      fks:
+      - friend_id
+      name: FriendshipList
+      resource: Friendship
+    - direction: tomany
+      fks:
+      - user_id
+      name: FriendshipList
+      resource: Friendship
+    - direction: tomany
+      fks:
+      - user_id
+      name: GroupMembershipList
+      resource: GroupMembership
+    - direction: tomany
+      fks:
+      - receiver_id
+      name: MessageList
+      resource: Message
+    - direction: tomany
+      fks:
+      - sender_id
+      name: senderMessageList
+      resource: Message
+    - direction: tomany
+      fks:
+      - user_id
+      name: NotificationList
+      resource: Notification
+    - direction: tomany
+      fks:
+      - user_id
+      name: PostList
+      resource: Post
+    - direction: tomany
+      fks:
+      - user_id
+      name: ProfileList
+      resource: Profile
+    - direction: tomany
+      fks:
+      - user_id
+      name: ReactionList
+      resource: Reaction
+    type: User
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false
